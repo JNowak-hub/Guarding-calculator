@@ -76,7 +76,7 @@ public class Protector extends JFrame implements WindowListener
         isotopesTable.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) 
             {
-                new IsotopeTable().setVisible(true);
+                new IsotopesTable().setVisible(true);
             }
         });
         guarding.addActionListener(new ActionListener() {
