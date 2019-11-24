@@ -18,6 +18,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
@@ -33,8 +34,11 @@ public class Guarding extends JFrame
     
     JPanel mainGuardingPanel = new JPanel();
     
+    JTabbedPane isotopeTab = new JTabbedPane();
+    
     JButton back = new JButton("Back");
     JButton calculate = new JButton("Calculate");
+    JButton isotopesTable = new JButton("View isotopes table");
     
     JCheckBox unmark1 = new JCheckBox("Slider on/off");
     JCheckBox unmark2 = new JCheckBox("Slider on/off");
@@ -108,6 +112,7 @@ public class Guarding extends JFrame
             .addComponent(isotopes)
             .addComponent(valueFormTable)
             .addComponent(isotopeName)
+            .addComponent(isotopesTable)
             .addContainerGap(10, Short.MAX_VALUE)
             .addComponent(back) 
     );
@@ -133,7 +138,8 @@ public class Guarding extends JFrame
             .addGroup(
             layout.createParallelGroup()
             ) 
-            .addComponent(isotopeName)        
+            .addComponent(isotopeName)      
+            .addComponent(isotopesTable)      
             .addContainerGap(10, Short.MAX_VALUE)
             .addComponent(back)    
     );
@@ -141,6 +147,12 @@ public class Guarding extends JFrame
             public void actionPerformed(ActionEvent ae)
             {
                 dispose();
+            }
+        });
+    isotopesTable.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ae)
+            {
+                new IsotopesTable().setVisible(true);
             }
         });
     

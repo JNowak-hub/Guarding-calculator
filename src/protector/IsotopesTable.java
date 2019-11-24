@@ -5,6 +5,7 @@
  */
 package protector;
 
+import java.awt.Toolkit;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -17,9 +18,10 @@ import javax.swing.event.*;
  */
 public class IsotopesTable extends JFrame implements TableModelListener
 {
+
     JTable gamma;
-    String[] columny = {"Izotop","Okres połowicznego znaiku dni","Energia przyjmowana do obliczeń","Stała eksopzycyjna"};
-    String[][] wiersze ={
+    String[] colums = {"Isotope","half-life","Energy used for calculations","Exposure rate constant"};
+    String[][] arrays ={
         {"Na-22","949","1.3","0.0296"},
         {"Na-24","0.6125","2.8","0.0449"},
         {"K-42","0.517","1.5","0.0045"}
@@ -27,7 +29,8 @@ public class IsotopesTable extends JFrame implements TableModelListener
     
     public IsotopesTable()
     {
-        gamma = new JTable(wiersze, columny)
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage("tableIcon.bmp"));
+        gamma = new JTable(arrays, colums)
                 {
                     public boolean isCellEditable(int wiersze, int columny)
                 {
