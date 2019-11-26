@@ -308,7 +308,7 @@ public class Guarding extends IsotopesTable
             calculate.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae)
             {
-            if(unmark1.isSelected() && unmark2.isSelected() && unmark3.isSelected())
+                if(unmark1.isSelected() && unmark2.isSelected() && unmark3.isSelected())
             { 
                 t = Float.parseFloat(timeValue.getText());
                 dist = Float.parseFloat(distanceValue.getText());
@@ -360,11 +360,18 @@ public class Guarding extends IsotopesTable
                 {
                     t = Float.parseFloat(time.getText());
                     dist = Float.parseFloat(distance.getText());
-                    activ = Float.parseFloat(activity.getText());     
-                }    
-               
-                    summ = activ + t + dist;
-            calculated.setText("Wynik: "+ Double.toString(summ) + "[cm]");
+                    activ = Float.parseFloat(activity.getText());
+                }  
+                
+                if((Float.isNaN(activ) && Float.isNaN(t) && Float.isNaN(dist)))
+                {
+                    JOptionPane.showMessageDialog(mainGuardingPanel, "Please enter number into text fields");
+                }
+                else
+                summ = (float) ((exposureRateConstant*Float.parseFloat(activity.getText())*Float.parseFloat(time.getText()))/Math.pow(Double.parseDouble(distance.getText()), 2));
+                calculated.setText("Wynik: "+ Float.toString(summ) + "[cm]");
+                        
+                
         }
 
     });
