@@ -18,7 +18,9 @@ import javax.swing.event.*;
  */
 public class IsotopesTable extends JFrame implements TableModelListener
 {
-
+    float energy;
+    float halfLife;
+    float exposureRateConstant;
     JTable gamma;
     String[] colums = {"Isotope","half-life","Energy used for calculations","Exposure rate constant"};
     String[][] arrays ={
@@ -26,6 +28,22 @@ public class IsotopesTable extends JFrame implements TableModelListener
         {"Na-24","0.6125","2.8","0.0449"},
         {"K-42","0.517","1.5","0.0045"}
     };
+    
+    public float getHalfLife(int a, int b)
+    {
+        this.halfLife = Float.valueOf(gamma.getModel().getValueAt(a, b).toString());
+        return halfLife;
+    }
+    public float getEnergy(int a, int b)
+    {
+        this.energy = Float.valueOf(gamma.getModel().getValueAt(a, b).toString());
+        return energy;
+    }
+    public float getExposureRateConstant(int a, int b)
+    {
+        this.exposureRateConstant = Float.valueOf(gamma.getModel().getValueAt(a, b).toString());
+        return exposureRateConstant;
+    }
     
     public IsotopesTable()
     {

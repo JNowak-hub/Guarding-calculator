@@ -25,7 +25,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 
-public class Guarding extends JFrame
+public class Guarding extends IsotopesTable
 {
     float t;
     float activ;
@@ -93,7 +93,7 @@ public class Guarding extends JFrame
             layout.createSequentialGroup()
             .addGroup(
             layout.createParallelGroup()
-                    .addComponent(activity, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE ,Short.MAX_VALUE) //nazwa, min wielkosc, preferowana wielkosc,max wielkosc
+                    .addComponent(activity, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE ,Short.MAX_VALUE)
                     .addComponent(activitySlider)
                     .addComponent(activityValue)
                     .addComponent(unmark3)
@@ -284,6 +284,23 @@ public class Guarding extends JFrame
                     }
                 }
             }            
+        });
+    
+    /*
+    *               Geting valuses form isotopesTable using JTabbePane
+    */
+            isotopes.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae)
+            {
+//                System.out.println(((JComboBox)ae.getSource()).getSelectedIndex());
+                getHalfLife(((JComboBox)ae.getSource()).getSelectedIndex(),1);
+                getEnergy(((JComboBox)ae.getSource()).getSelectedIndex(),2);
+                getExposureRateConstant(((JComboBox)ae.getSource()).getSelectedIndex(),3);
+                System.out.println(energy);
+                System.out.println(halfLife);
+                System.out.println(exposureRateConstant);
+            }
         });
     /*
     *               Calculating and getting values part
