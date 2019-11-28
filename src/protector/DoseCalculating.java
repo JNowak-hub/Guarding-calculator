@@ -15,6 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
@@ -25,7 +26,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 
-public class Guarding extends IsotopesTable
+public class DoseCalculating extends IsotopesTable
 {
     float t;
     float activ;
@@ -47,21 +48,24 @@ public class Guarding extends IsotopesTable
     JTextField activity = new JTextField("Enter Activity in Bq");
     JTextField time = new JTextField("Enter exposure time in s");
     JTextField distance = new JTextField("Enter source distance in m");
-
+    
     JSlider activitySlider = new JSlider();
     JSlider timeSlider = new JSlider();
     JSlider distanceSlider = new JSlider();
     
+    
     JTextArea distanceValue = new JTextArea(""+distanceSlider.getValue());
     JTextArea activityValue = new JTextArea(""+activitySlider.getValue());
     JTextArea timeValue = new JTextArea(""+timeSlider.getValue());
-    JTextArea isotopeName = new JTextArea("", 5,1);
-    JTextArea valueFormTable = new JTextArea("", 5,1);
     JTextArea calculated = new JTextArea();
     
-    String [] isotopesName = {"Na-22", "Na-24", "K-42"};    
+    JLabel enterDistance = new JLabel("Enter distance form source [m]");
+    JLabel enterActivity = new JLabel("Enter source activity [Bq]");
+    JLabel enterTime = new JLabel("Enter expousure time [s]");
+    
+    String [] isotopesName = {"---", "Na-22", "Na-24", "K-42"};    
     JComboBox isotopes = new JComboBox(isotopesName);
-       public Guarding()
+       public DoseCalculating()
     {
         initComponents();
     }
@@ -73,8 +77,8 @@ public class Guarding extends IsotopesTable
         int currentHeight = this.getSize().height;
         
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        this.setBounds((width-currentWidth)/4, (height-currentHeight)/2, width/2, height);
-        this.setTitle("Obliczanie osłon stałych made by: J.N.");
+        this.setBounds((width-currentWidth)/4, (height-currentHeight), width/2, height+30);
+        this.setTitle("Calculating radiation guarding made by: J.N.");
         
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.getContentPane().add(mainGuardingPanel);
@@ -93,14 +97,17 @@ public class Guarding extends IsotopesTable
             layout.createSequentialGroup()
             .addGroup(
             layout.createParallelGroup()
+                    .addComponent(enterActivity)
                     .addComponent(activity, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE ,Short.MAX_VALUE)
                     .addComponent(activitySlider)
                     .addComponent(activityValue)
                     .addComponent(unmark3)
+                    .addComponent(enterTime)
                     .addComponent(time, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE ,Short.MAX_VALUE)
                     .addComponent(timeSlider)
                     .addComponent(timeValue)
                     .addComponent(unmark1)
+                    .addComponent(enterDistance)
                     .addComponent(distance, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE ,Short.MAX_VALUE)
                     .addComponent(distanceSlider)
                     .addComponent(distanceValue)
@@ -110,8 +117,6 @@ public class Guarding extends IsotopesTable
             )
             
             .addComponent(isotopes)
-            .addComponent(valueFormTable)
-            .addComponent(isotopeName)
             .addComponent(isotopesTable)
             .addContainerGap(10, Short.MAX_VALUE)
             .addComponent(back) 
@@ -120,15 +125,17 @@ public class Guarding extends IsotopesTable
     layout.setVerticalGroup(
             layout.createSequentialGroup()
                     .addComponent(isotopes)
-                    .addComponent(valueFormTable)
+                    .addComponent(enterTime)
                     .addComponent(time)
                     .addComponent(timeSlider)
                     .addComponent(timeValue)
                     .addComponent(unmark1)
+                    .addComponent(enterDistance)
                     .addComponent(distance)
                     .addComponent(distanceSlider)
                     .addComponent(distanceValue)
                     .addComponent(unmark2)
+                    .addComponent(enterActivity)
                     .addComponent(activity)
                     .addComponent(activitySlider)
                     .addComponent(activityValue)
@@ -137,8 +144,7 @@ public class Guarding extends IsotopesTable
                     .addComponent(calculated)
             .addGroup(
             layout.createParallelGroup()
-            ) 
-            .addComponent(isotopeName)      
+            )     
             .addComponent(isotopesTable)      
             .addContainerGap(10, Short.MAX_VALUE)
             .addComponent(back)    
@@ -293,13 +299,15 @@ public class Guarding extends IsotopesTable
             @Override
             public void actionPerformed(ActionEvent ae)
             {
-//                System.out.println(((JComboBox)ae.getSource()).getSelectedIndex());
-                getHalfLife(((JComboBox)ae.getSource()).getSelectedIndex(),1);
-                getEnergy(((JComboBox)ae.getSource()).getSelectedIndex(),2);
-                getExposureRateConstant(((JComboBox)ae.getSource()).getSelectedIndex(),3);
+              if(((JComboBox)ae.getSource()).getSelectedIndex() > 0)
+              {
+                getHalfLife(((JComboBox)ae.getSource()).getSelectedIndex()-1,1);
+                getEnergy(((JComboBox)ae.getSource()).getSelectedIndex()-1,2);
+                getExposureRateConstant(((JComboBox)ae.getSource()).getSelectedIndex()-1,3);
                 System.out.println(energy);
                 System.out.println(halfLife);
                 System.out.println(exposureRateConstant);
+              }
             }
         });
     /*
@@ -308,70 +316,77 @@ public class Guarding extends IsotopesTable
             calculate.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae)
             {
-                if(unmark1.isSelected() && unmark2.isSelected() && unmark3.isSelected())
-            { 
-                t = Float.parseFloat(timeValue.getText());
-                dist = Float.parseFloat(distanceValue.getText());
-                activ = Float.parseFloat(activityValue.getText());
-            }
-                else if(!unmark1.isSelected() && unmark2.isSelected() && unmark3.isSelected())
+                if(isotopes.getSelectedIndex() == 0)
                 {
-                    t = Float.parseFloat(time.getText());
-                    dist = Float.parseFloat(distanceValue.getText());
-                    activ = Float.parseFloat(activityValue.getText());     
-                }
-                else if(unmark1.isSelected() && !unmark2.isSelected() && unmark3.isSelected())
-                {
-                    t = Float.parseFloat(timeValue.getText());
-                    dist = Float.parseFloat(distance.getText());
-                    activ = Float.parseFloat(activityValue.getText());     
-                }                    
-                else if(unmark1.isSelected() && unmark2.isSelected() && !unmark3.isSelected())
-                {
-                    t = Float.parseFloat(timeValue.getText());
-                    dist = Float.parseFloat(distanceValue.getText());
-                    activ = Float.parseFloat(activity.getText());     
-                }                     
-                else if(!unmark1.isSelected() && !unmark2.isSelected() && unmark3.isSelected())
-                {
-                    t = Float.parseFloat(time.getText());
-                    dist = Float.parseFloat(distance.getText());
-                    activ = Float.parseFloat(activityValue.getText());     
-                }                     
-                else if(!unmark1.isSelected() && unmark2.isSelected() && !unmark3.isSelected())
-                {
-                    t = Float.parseFloat(time.getText());
-                    dist = Float.parseFloat(distanceValue.getText());
-                    activ = Float.parseFloat(activity.getText());     
-                }                     
-                else if(unmark1.isSelected() && !unmark2.isSelected() && !unmark3.isSelected())
-                {
-                    t = Float.parseFloat(timeValue.getText());
-                    dist = Float.parseFloat(distance.getText());
-                    activ = Float.parseFloat(activity.getText());     
-                }                     
-                else if(unmark1.isSelected() && !unmark2.isSelected() && unmark3.isSelected())
-                {
-                    t = Float.parseFloat(timeValue.getText());
-                    dist = Float.parseFloat(distance.getText());
-                    activ = Float.parseFloat(activityValue.getText());     
-                }                     
-                else if(!unmark1.isSelected() && !unmark2.isSelected() && !unmark3.isSelected())
-                {
-                    t = Float.parseFloat(time.getText());
-                    dist = Float.parseFloat(distance.getText());
-                    activ = Float.parseFloat(activity.getText());
-                }  
-                
-                if((Float.isNaN(activ) && Float.isNaN(t) && Float.isNaN(dist)))
-                {
-                    JOptionPane.showMessageDialog(mainGuardingPanel, "Please enter number into text fields");
+                    JOptionPane.showMessageDialog(mainGuardingPanel,"Chose isotope");
                 }
                 else
-                summ = (float) ((exposureRateConstant*Float.parseFloat(activity.getText())*Float.parseFloat(time.getText()))/Math.pow(Double.parseDouble(distance.getText()), 2));
-                calculated.setText("Wynik: "+ Float.toString(summ) + "[cm]");
-                        
-                
+                {
+                    try
+                    {
+
+                        if(unmark1.isSelected() && unmark2.isSelected() && unmark3.isSelected())
+                        { 
+                        t = Float.parseFloat(timeValue.getText());
+                        dist = Float.parseFloat(distanceValue.getText());
+                        activ = Float.parseFloat(activityValue.getText());
+                        }
+                        else if(!unmark1.isSelected() && unmark2.isSelected() && unmark3.isSelected())
+                        {
+                            t = Float.parseFloat(time.getText());
+                            dist = Float.parseFloat(distanceValue.getText());
+                            activ = Float.parseFloat(activityValue.getText());     
+                        }
+                        else if(unmark1.isSelected() && !unmark2.isSelected() && unmark3.isSelected())
+                        {
+                            t = Float.parseFloat(timeValue.getText());
+                            dist = Float.parseFloat(distance.getText());
+                            activ = Float.parseFloat(activityValue.getText());     
+                        }                    
+                        else if(unmark1.isSelected() && unmark2.isSelected() && !unmark3.isSelected())
+                        {
+                            t = Float.parseFloat(timeValue.getText());
+                            dist = Float.parseFloat(distanceValue.getText());
+                            activ = Float.parseFloat(activity.getText());     
+                        }                     
+                        else if(!unmark1.isSelected() && !unmark2.isSelected() && unmark3.isSelected())
+                        {
+                            t = Float.parseFloat(time.getText());
+                            dist = Float.parseFloat(distance.getText());
+                            activ = Float.parseFloat(activityValue.getText());     
+                        }                     
+                        else if(!unmark1.isSelected() && unmark2.isSelected() && !unmark3.isSelected())
+                        {
+                            t = Float.parseFloat(time.getText());
+                            dist = Float.parseFloat(distanceValue.getText());
+                            activ = Float.parseFloat(activity.getText());     
+                        }                     
+                        else if(unmark1.isSelected() && !unmark2.isSelected() && !unmark3.isSelected())
+                        {
+                            t = Float.parseFloat(timeValue.getText());
+                            dist = Float.parseFloat(distance.getText());
+                            activ = Float.parseFloat(activity.getText());     
+                        }                     
+                        else if(unmark1.isSelected() && !unmark2.isSelected() && unmark3.isSelected())
+                        {
+                            t = Float.parseFloat(timeValue.getText());
+                            dist = Float.parseFloat(distance.getText());
+                            activ = Float.parseFloat(activityValue.getText());     
+                        }                     
+                        else if(!unmark1.isSelected() && !unmark2.isSelected() && !unmark3.isSelected())
+                        {
+                            t = Float.parseFloat(time.getText());
+                            dist = Float.parseFloat(distance.getText());
+                            activ = Float.parseFloat(activity.getText());
+                        }
+                        summ = (float) ((exposureRateConstant*activ*t)/(dist * dist));
+                        calculated.setText("Wynik: "+ Float.toString(summ) + "[Gy]");    
+                    }
+                    catch(NumberFormatException e)
+                    {
+                        JOptionPane.showMessageDialog(mainGuardingPanel,e.getMessage());
+                    }
+                }
         }
 
     });

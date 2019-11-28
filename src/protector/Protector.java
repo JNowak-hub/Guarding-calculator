@@ -34,7 +34,7 @@ public class Protector extends JFrame implements WindowListener
         this.addWindowListener(this);
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.setBounds((width-currentWidth)/4, (height-currentHeight)/2, width/2, height/2);
-        this.setTitle("Obliczanie osłon stałych made by: J.N.");
+        this.setTitle("Calculating radiation guarding made by: J.N.");
         
         this.getContentPane().add(mainPanel);
         GroupLayout layout = new GroupLayout(getContentPane());
@@ -79,10 +79,10 @@ public class Protector extends JFrame implements WindowListener
                 new IsotopesTable().setVisible(true);
             }
         });
-        guarding.addActionListener(new ActionListener() {
+        dose.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) 
             {
-                new Guarding().setVisible(true);
+                new DoseCalculating().setVisible(true);
             }
         });
         
