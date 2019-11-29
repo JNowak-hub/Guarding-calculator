@@ -32,6 +32,9 @@ public class DoseCalculating extends IsotopesTable
     float activ;
     float dist;
     float summ;
+    float activityUnitMultiplayer;
+    float timeUnitMultiplayer;
+    float distanceUnitMultiplayer;
     
     JPanel mainGuardingPanel = new JPanel();
     
@@ -45,9 +48,9 @@ public class DoseCalculating extends IsotopesTable
     JCheckBox unmark2 = new JCheckBox("Slider on/off");
     JCheckBox unmark3 = new JCheckBox("Slider on/off");
     
-    JTextField activity = new JTextField("Enter Activity in Bq");
-    JTextField time = new JTextField("Enter exposure time in s");
-    JTextField distance = new JTextField("Enter source distance in m");
+    JTextField activity = new JTextField("Chose unit and enter Activity");
+    JTextField time = new JTextField("Chose unit and enter exposure time");
+    JTextField distance = new JTextField("Chose unit and enter distance from source");
     
     JSlider activitySlider = new JSlider();
     JSlider timeSlider = new JSlider();
@@ -59,12 +62,18 @@ public class DoseCalculating extends IsotopesTable
     JTextArea timeValue = new JTextArea(""+timeSlider.getValue());
     JTextArea calculated = new JTextArea();
     
-    JLabel enterDistance = new JLabel("Enter distance form source [m]");
-    JLabel enterActivity = new JLabel("Enter source activity [Bq]");
-    JLabel enterTime = new JLabel("Enter expousure time [s]");
+    JLabel enterDistance = new JLabel("Enter distance form source");
+    JLabel enterActivity = new JLabel("Enter source activity");
+    JLabel enterTime = new JLabel("Enter expousure time");
     
-    String [] isotopesName = {"---", "Na-22", "Na-24", "K-42"};    
+    String [] isotopesName = {"---", "Na-22", "Na-24", "K-42"}; 
+    String [] activityUnitName = {"---", "Bq", "kBq", "MBq", "GBq"}; 
+    String [] timeUnitName = {"---", "s", "min", "h", "days"}; 
+    String [] distanceUnitName = {"---", "cm", "m"}; 
     JComboBox isotopes = new JComboBox(isotopesName);
+    JComboBox activityUnit = new JComboBox(activityUnitName);
+    JComboBox timeUnit = new JComboBox(timeUnitName);
+    JComboBox distanceUnit = new JComboBox(distanceUnitName);
        public DoseCalculating()
     {
         initComponents();
@@ -77,7 +86,7 @@ public class DoseCalculating extends IsotopesTable
         int currentHeight = this.getSize().height;
         
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        this.setBounds((width-currentWidth)/4, (height-currentHeight), width/2, height+30);
+        this.setBounds((width-currentWidth)/4, (height-currentHeight), width/3+10, height+150);
         this.setTitle("Calculating radiation guarding made by: J.N.");
         
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -97,17 +106,21 @@ public class DoseCalculating extends IsotopesTable
             layout.createSequentialGroup()
             .addGroup(
             layout.createParallelGroup()
+                    
                     .addComponent(enterActivity)
+                    .addComponent(activityUnit, 50, 50 ,60)
                     .addComponent(activity, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE ,Short.MAX_VALUE)
                     .addComponent(activitySlider)
                     .addComponent(activityValue)
                     .addComponent(unmark3)
                     .addComponent(enterTime)
+                    .addComponent(timeUnit, 50, 50 ,60)
                     .addComponent(time, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE ,Short.MAX_VALUE)
                     .addComponent(timeSlider)
                     .addComponent(timeValue)
                     .addComponent(unmark1)
                     .addComponent(enterDistance)
+                    .addComponent(distanceUnit, 50, 50 ,60)
                     .addComponent(distance, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE ,Short.MAX_VALUE)
                     .addComponent(distanceSlider)
                     .addComponent(distanceValue)
@@ -117,7 +130,7 @@ public class DoseCalculating extends IsotopesTable
             )
             
             .addComponent(isotopes)
-            .addComponent(isotopesTable)
+                    .addComponent(isotopesTable)
             .addContainerGap(10, Short.MAX_VALUE)
             .addComponent(back) 
     );
@@ -126,16 +139,19 @@ public class DoseCalculating extends IsotopesTable
             layout.createSequentialGroup()
                     .addComponent(isotopes)
                     .addComponent(enterTime)
+                    .addComponent(timeUnit)
                     .addComponent(time)
                     .addComponent(timeSlider)
                     .addComponent(timeValue)
                     .addComponent(unmark1)
                     .addComponent(enterDistance)
+                    .addComponent(distanceUnit)
                     .addComponent(distance)
                     .addComponent(distanceSlider)
                     .addComponent(distanceValue)
                     .addComponent(unmark2)
                     .addComponent(enterActivity)
+                    .addComponent(activityUnit)
                     .addComponent(activity)
                     .addComponent(activitySlider)
                     .addComponent(activityValue)
@@ -145,7 +161,7 @@ public class DoseCalculating extends IsotopesTable
             .addGroup(
             layout.createParallelGroup()
             )     
-            .addComponent(isotopesTable)      
+            .addComponent(isotopesTable) 
             .addContainerGap(10, Short.MAX_VALUE)
             .addComponent(back)    
     );
@@ -311,6 +327,51 @@ public class DoseCalculating extends IsotopesTable
             }
         });
     /*
+    *               Getting unit multiplayer from UnitBox       
+    */        
+            activityUnit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) 
+            {
+                if(((JComboBox)ae.getSource()).getSelectedIndex() == 1)
+                    activityUnitMultiplayer = (float) 0.000000001;
+                else if(((JComboBox)ae.getSource()).getSelectedIndex() == 2)
+                    activityUnitMultiplayer = (float) 0.000001;
+                else if(((JComboBox)ae.getSource()).getSelectedIndex() == 3)
+                    activityUnitMultiplayer = (float) 0.001;
+                else if(((JComboBox)ae.getSource()).getSelectedIndex() == 4)
+                    activityUnitMultiplayer = 1;
+            }
+        });
+            
+            timeUnit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae)
+            {
+                if(((JComboBox)ae.getSource()).getSelectedIndex() == 1)
+                    timeUnitMultiplayer = (float) 0.0002777778;
+                else if(((JComboBox)ae.getSource()).getSelectedIndex() == 2)
+                    timeUnitMultiplayer = (float) 0.0166666667;
+                else if(((JComboBox)ae.getSource()).getSelectedIndex() == 3)
+                    timeUnitMultiplayer = 1;
+                else if(((JComboBox)ae.getSource()).getSelectedIndex() == 4)
+                    timeUnitMultiplayer = 24;
+            }
+        });
+            
+            distanceUnit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) 
+            {
+                if(((JComboBox)ae.getSource()).getSelectedIndex() == 1)
+                    distanceUnitMultiplayer = (float) 0.01;
+                else if(((JComboBox)ae.getSource()).getSelectedIndex() == 2)
+                    distanceUnitMultiplayer = 1;
+            }
+        });
+            
+    
+    /*
     *               Calculating and getting values part
     */
             calculate.addActionListener(new ActionListener() {
@@ -379,12 +440,17 @@ public class DoseCalculating extends IsotopesTable
                             dist = Float.parseFloat(distance.getText());
                             activ = Float.parseFloat(activity.getText());
                         }
-                        summ = (float) ((exposureRateConstant*activ*t)/(dist * dist));
-                        calculated.setText("Wynik: "+ Float.toString(summ) + "[Gy]");    
+                        
+                        summ = (float) ((exposureRateConstant*activ*activityUnitMultiplayer*t*timeUnitMultiplayer)/(Math.pow((Double.parseDouble(String.valueOf(dist))*distanceUnitMultiplayer), 2)));
+                        calculated.setText("Wynik: "+ Float.toString(summ) + "[cGy]");    
                     }
                     catch(NumberFormatException e)
                     {
                         JOptionPane.showMessageDialog(mainGuardingPanel,e.getMessage());
+                    }
+                    if(Float.isNaN(summ))
+                    {
+                        JOptionPane.showMessageDialog(mainGuardingPanel,"Chose correct units");
                     }
                 }
         }
