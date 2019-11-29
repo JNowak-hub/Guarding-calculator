@@ -50,6 +50,7 @@ public class IsotopesTable extends JFrame implements TableModelListener
         this.setIconImage(Toolkit.getDefaultToolkit().getImage("tableIcon.bmp"));
         gamma = new JTable(arrays, colums)
                 {
+                    @Override
                     public boolean isCellEditable(int wiersze, int columny)
                 {
                     return false;

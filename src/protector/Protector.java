@@ -2,7 +2,6 @@ package protector;
 
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import javax.swing.GroupLayout;
@@ -24,7 +23,7 @@ public class Protector extends JFrame implements WindowListener
         initComponets();
     }
     
-    public void initComponets()
+    private void initComponets()
     {
         int width = Toolkit.getDefaultToolkit().getScreenSize().width-500;
         int height = Toolkit.getDefaultToolkit().getScreenSize().height/2;
@@ -65,25 +64,16 @@ public class Protector extends JFrame implements WindowListener
                 .addContainerGap(10, Short.MAX_VALUE)
                 .addComponent(exit)
                 );
-        exit.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent ae) 
-            {
-                int quit = JOptionPane.showConfirmDialog(rootPane, "Czy na pewno chceszs wyjść?");
-                if(quit == 0)
-                    dispose();
-            }
+        exit.addActionListener((ActionEvent ae) -> {
+            int quit = JOptionPane.showConfirmDialog(rootPane, "Czy na pewno chceszs wyjść?");
+            if(quit == 0)
+                dispose();
         });
-        isotopesTable.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent ae) 
-            {
-                new IsotopesTable().setVisible(true);
-            }
+        isotopesTable.addActionListener((ActionEvent ae) -> {
+            new IsotopesTable().setVisible(true);
         });
-        dose.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent ae) 
-            {
-                new DoseCalculating().setVisible(true);
-            }
+        dose.addActionListener((ActionEvent ae) -> {
+            new DoseCalculating().setVisible(true);
         });
         
     }

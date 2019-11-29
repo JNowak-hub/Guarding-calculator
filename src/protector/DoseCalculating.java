@@ -6,7 +6,6 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
@@ -23,7 +22,6 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 
 public class DoseCalculating extends IsotopesTable
@@ -78,7 +76,7 @@ public class DoseCalculating extends IsotopesTable
     {
         initComponents();
     }
-        public void initComponents()
+        private void initComponents()
     {
         int width = Toolkit.getDefaultToolkit().getScreenSize().width-500;
         int height = Toolkit.getDefaultToolkit().getScreenSize().height/2;
@@ -165,17 +163,11 @@ public class DoseCalculating extends IsotopesTable
             .addContainerGap(10, Short.MAX_VALUE)
             .addComponent(back)    
     );
-    back.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent ae)
-            {
-                dispose();
-            }
+    back.addActionListener((ActionEvent ae) -> {
+        dispose();
         });
-    isotopesTable.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent ae)
-            {
-                new IsotopesTable().setVisible(true);
-            }
+    isotopesTable.addActionListener((ActionEvent ae) -> {
+        new IsotopesTable().setVisible(true);
         });
     
     /*
@@ -190,12 +182,14 @@ public class DoseCalculating extends IsotopesTable
                 
             return false;     
         }
+            @Override
             public void keyTyped(KeyEvent ke)
         {
             if(!number(ke.getKeyChar()))
                 ke.consume();
                 
          }
+            @Override
             public void keyPressed(KeyEvent ke)
             {
                 if(ke.isControlDown() && ke.getKeyCode() == KeyEvent.VK_V)
@@ -235,11 +229,13 @@ public class DoseCalculating extends IsotopesTable
                 
             return false;     
         }
+            @Override
             public void keyTyped(KeyEvent ke)
         {
             if(!number(ke.getKeyChar()))
                 ke.consume();  
          }
+            @Override
             public void keyPressed(KeyEvent ke)
             {
                 Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
@@ -275,12 +271,14 @@ public class DoseCalculating extends IsotopesTable
                 
             return false;     
         }
+            @Override
             public void keyTyped(KeyEvent ke)
         {
             if(!number(ke.getKeyChar()))
                 ke.consume();
                 
          }
+            @Override
             public void keyPressed(KeyEvent ke)
             {
                 Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
@@ -311,28 +309,21 @@ public class DoseCalculating extends IsotopesTable
     /*
     *               Geting valuses form isotopesTable using JTabbePane
     */
-            isotopes.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae)
-            {
-              if(((JComboBox)ae.getSource()).getSelectedIndex() > 0)
-              {
-                getHalfLife(((JComboBox)ae.getSource()).getSelectedIndex()-1,1);
-                getEnergy(((JComboBox)ae.getSource()).getSelectedIndex()-1,2);
-                getExposureRateConstant(((JComboBox)ae.getSource()).getSelectedIndex()-1,3);
-                System.out.println(energy);
-                System.out.println(halfLife);
-                System.out.println(exposureRateConstant);
-              }
-            }
+            isotopes.addActionListener((ActionEvent ae) -> {
+                if(((JComboBox)ae.getSource()).getSelectedIndex() > 0)
+                {
+                    getHalfLife(((JComboBox)ae.getSource()).getSelectedIndex()-1,1);
+                    getEnergy(((JComboBox)ae.getSource()).getSelectedIndex()-1,2);
+                    getExposureRateConstant(((JComboBox)ae.getSource()).getSelectedIndex()-1,3);
+                    System.out.println(energy);
+                    System.out.println(halfLife);
+                    System.out.println(exposureRateConstant);
+                }
         });
     /*
     *               Getting unit multiplayer from UnitBox       
     */        
-            activityUnit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) 
-            {
+            activityUnit.addActionListener((ActionEvent ae) -> {
                 if(((JComboBox)ae.getSource()).getSelectedIndex() == 1)
                     activityUnitMultiplayer = (float) 0.000000001;
                 else if(((JComboBox)ae.getSource()).getSelectedIndex() == 2)
@@ -341,13 +332,9 @@ public class DoseCalculating extends IsotopesTable
                     activityUnitMultiplayer = (float) 0.001;
                 else if(((JComboBox)ae.getSource()).getSelectedIndex() == 4)
                     activityUnitMultiplayer = 1;
-            }
         });
             
-            timeUnit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae)
-            {
+            timeUnit.addActionListener((ActionEvent ae) -> {
                 if(((JComboBox)ae.getSource()).getSelectedIndex() == 1)
                     timeUnitMultiplayer = (float) 0.0002777778;
                 else if(((JComboBox)ae.getSource()).getSelectedIndex() == 2)
@@ -356,27 +343,20 @@ public class DoseCalculating extends IsotopesTable
                     timeUnitMultiplayer = 1;
                 else if(((JComboBox)ae.getSource()).getSelectedIndex() == 4)
                     timeUnitMultiplayer = 24;
-            }
         });
             
-            distanceUnit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) 
-            {
+            distanceUnit.addActionListener((ActionEvent ae) -> {
                 if(((JComboBox)ae.getSource()).getSelectedIndex() == 1)
                     distanceUnitMultiplayer = (float) 0.01;
                 else if(((JComboBox)ae.getSource()).getSelectedIndex() == 2)
                     distanceUnitMultiplayer = 1;
-            }
         });
             
     
     /*
     *               Calculating and getting values part
     */
-            calculate.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent ae)
-            {
+            calculate.addActionListener((ActionEvent ae) -> {
                 if(isotopes.getSelectedIndex() == 0)
                 {
                     JOptionPane.showMessageDialog(mainGuardingPanel,"Chose isotope");
@@ -387,10 +367,10 @@ public class DoseCalculating extends IsotopesTable
                     {
 
                         if(unmark1.isSelected() && unmark2.isSelected() && unmark3.isSelected())
-                        { 
-                        t = Float.parseFloat(timeValue.getText());
-                        dist = Float.parseFloat(distanceValue.getText());
-                        activ = Float.parseFloat(activityValue.getText());
+                        {
+                            t = Float.parseFloat(timeValue.getText());
+                            dist = Float.parseFloat(distanceValue.getText());
+                            activ = Float.parseFloat(activityValue.getText());
                         }
                         else if(!unmark1.isSelected() && unmark2.isSelected() && unmark3.isSelected())
                         {
@@ -402,37 +382,37 @@ public class DoseCalculating extends IsotopesTable
                         {
                             t = Float.parseFloat(timeValue.getText());
                             dist = Float.parseFloat(distance.getText());
-                            activ = Float.parseFloat(activityValue.getText());     
+                            activ = Float.parseFloat(activityValue.getText());
                         }                    
                         else if(unmark1.isSelected() && unmark2.isSelected() && !unmark3.isSelected())
                         {
                             t = Float.parseFloat(timeValue.getText());
                             dist = Float.parseFloat(distanceValue.getText());
-                            activ = Float.parseFloat(activity.getText());     
+                            activ = Float.parseFloat(activity.getText());
                         }                     
                         else if(!unmark1.isSelected() && !unmark2.isSelected() && unmark3.isSelected())
                         {
                             t = Float.parseFloat(time.getText());
                             dist = Float.parseFloat(distance.getText());
-                            activ = Float.parseFloat(activityValue.getText());     
+                            activ = Float.parseFloat(activityValue.getText());
                         }                     
                         else if(!unmark1.isSelected() && unmark2.isSelected() && !unmark3.isSelected())
                         {
                             t = Float.parseFloat(time.getText());
                             dist = Float.parseFloat(distanceValue.getText());
-                            activ = Float.parseFloat(activity.getText());     
+                            activ = Float.parseFloat(activity.getText());
                         }                     
                         else if(unmark1.isSelected() && !unmark2.isSelected() && !unmark3.isSelected())
                         {
                             t = Float.parseFloat(timeValue.getText());
                             dist = Float.parseFloat(distance.getText());
-                            activ = Float.parseFloat(activity.getText());     
+                            activ = Float.parseFloat(activity.getText());
                         }                     
                         else if(unmark1.isSelected() && !unmark2.isSelected() && unmark3.isSelected())
                         {
                             t = Float.parseFloat(timeValue.getText());
                             dist = Float.parseFloat(distance.getText());
-                            activ = Float.parseFloat(activityValue.getText());     
+                            activ = Float.parseFloat(activityValue.getText());
                         }                     
                         else if(!unmark1.isSelected() && !unmark2.isSelected() && !unmark3.isSelected())
                         {
@@ -453,9 +433,7 @@ public class DoseCalculating extends IsotopesTable
                         JOptionPane.showMessageDialog(mainGuardingPanel,"Chose correct units");
                     }
                 }
-        }
-
-    });
+        });
             /*
             *           Slider properties part
             */
@@ -509,27 +487,15 @@ public class DoseCalculating extends IsotopesTable
         activitySlider.setPaintTicks(true);
         activitySlider.setEnabled(false);
         
-        distanceSlider.addChangeListener(new ChangeListener() 
-        {
-        public void stateChanged(ChangeEvent ce)
-        {
+        distanceSlider.addChangeListener((ChangeEvent ce) -> {
             distanceValue.setText(""+((JSlider)ce.getSource()).getValue());
-        }
-    });
-        activitySlider.addChangeListener(new ChangeListener() 
-        {
-        public void stateChanged(ChangeEvent ce)
-        {
+        });
+        activitySlider.addChangeListener((ChangeEvent ce) -> {
             activityValue.setText(""+((JSlider)ce.getSource()).getValue());
-        }
-    });
-        timeSlider.addChangeListener(new ChangeListener() 
-        {
-        public void stateChanged(ChangeEvent ce)
-        {
+        });
+        timeSlider.addChangeListener((ChangeEvent ce) -> {
             timeValue.setText(""+((JSlider)ce.getSource()).getValue());
-        }
-    });
+        });
 } 
 }
 
