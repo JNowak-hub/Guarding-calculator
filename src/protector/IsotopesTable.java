@@ -16,7 +16,7 @@ import javax.swing.event.*;
  *
  * @author admin
  */
-public class IsotopesTable extends JFrame implements TableModelListener
+public class IsotopesTable extends Protector implements TableModelListener
 {
     float energy;
     float halfLife;
@@ -24,9 +24,16 @@ public class IsotopesTable extends JFrame implements TableModelListener
     JTable gamma;
     String[] colums = {"Isotope","half-life","Energy used for calculations","Exposure rate constant"};
     String[][] arrays ={
-        {"Na-22","949","1.3","0.0296"},
+        {"Na-22","949.629717","1.3","0.0296"},
         {"Na-24","0.6125","2.8","0.0449"},
-        {"K-42","0.517","1.5","0.0045"}
+        {"K-42","0.5166666667","1.5","0.0045"}
+    };
+        JTable gammaView;
+    String[] columsView = {"Isotope","half-life","Energy used for calculations [MeV]","Exposure rate constant cGyh"};
+    String[][] arraysView ={
+        {"Na-22","2,6 y","1.3","0.0296"},
+        {"Na-24","14,7 h","2.8","0.0449"},
+        {"K-42","12,4 h","1.5","0.0045"}
     };
     
     public float getHalfLife(int a, int b)
@@ -48,7 +55,7 @@ public class IsotopesTable extends JFrame implements TableModelListener
     public IsotopesTable()
     {
         this.setIconImage(Toolkit.getDefaultToolkit().getImage("tableIcon.bmp"));
-        gamma = new JTable(arrays, colums)
+        gammaView = new JTable(arraysView, columsView)
                 {
                     @Override
                     public boolean isCellEditable(int wiersze, int columny)
@@ -56,8 +63,8 @@ public class IsotopesTable extends JFrame implements TableModelListener
                     return false;
                 }
                 };
-        gamma.setBounds(50,50,200,200);
-        JScrollPane js = new JScrollPane(gamma);
+        gammaView.setBounds(50,50,200,200);
+        JScrollPane js = new JScrollPane(gammaView);
         this.add(js);
         this.setSize(300,400);
     }

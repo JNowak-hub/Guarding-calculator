@@ -67,13 +67,21 @@ public class Protector extends JFrame implements WindowListener
         exit.addActionListener((ActionEvent ae) -> {
             int quit = JOptionPane.showConfirmDialog(rootPane, "Czy na pewno chceszs wyjść?");
             if(quit == 0)
+            {
                 dispose();
+            }
         });
         isotopesTable.addActionListener((ActionEvent ae) -> {
             new IsotopesTable().setVisible(true);
+            dispose();
         });
         dose.addActionListener((ActionEvent ae) -> {
             new DoseCalculating().setVisible(true);
+            dispose();
+        });
+        activity.addActionListener((ActionEvent ae) -> {
+            new ActivityMenu().setVisible(true);
+            dispose();
         });
         
     }
