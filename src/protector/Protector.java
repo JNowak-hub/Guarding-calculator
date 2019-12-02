@@ -10,6 +10,10 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+/**
+ *
+ * @author Jakub Nowak
+ */
 public class Protector extends JFrame implements WindowListener
 {
     JPanel mainPanel = new JPanel();
