@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -73,6 +74,12 @@ public class ActivityMenu extends JFrame{
     );
     referenceActivity.addActionListener((ActionEvent ae) -> {
         new ReferenceActivityCalculator().setVisible(true);
+        });
+    currentActivity.addActionListener((ActionEvent ae) -> {
+        JOptionPane.showMessageDialog(rootPane, "This feature is in progress");
+        });
+    indentyfyIsotop.addActionListener((ActionEvent ae) -> {
+        JOptionPane.showMessageDialog(rootPane, "This feature is in progress");
         });
     back.addActionListener((ActionEvent ae) -> {
         dispose();

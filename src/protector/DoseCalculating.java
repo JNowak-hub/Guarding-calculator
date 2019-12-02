@@ -501,4 +501,3 @@ public class DoseCalculating extends IsotopesTable
         });
 } 
 }
-
