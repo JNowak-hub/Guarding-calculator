@@ -167,7 +167,6 @@ public class DoseCalculating extends IsotopesTable
             .addComponent(back)    
     );
     back.addActionListener((ActionEvent ae) -> {
-        new Protector().setVisible(true);
         dispose();
         });
     isotopesTable.addActionListener((ActionEvent ae) -> {

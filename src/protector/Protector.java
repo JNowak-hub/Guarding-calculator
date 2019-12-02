@@ -1,5 +1,6 @@
 package protector;
 
+import java.awt.Frame;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
@@ -71,21 +72,16 @@ public class Protector extends JFrame implements WindowListener
         exit.addActionListener((ActionEvent ae) -> {
             int quit = JOptionPane.showConfirmDialog(rootPane, "Czy na pewno chceszs wyjść?");
             if(quit == 0)
-            {
-                dispose();
-            }
+                System.exit(0);
         });
         isotopesTable.addActionListener((ActionEvent ae) -> {
             new IsotopesTable().setVisible(true);
-            dispose();
         });
         dose.addActionListener((ActionEvent ae) -> {
             new DoseCalculating().setVisible(true);
-            dispose();
         });
         activity.addActionListener((ActionEvent ae) -> {
             new ActivityMenu().setVisible(true);
-            dispose();
         });
         
     }
@@ -106,7 +102,7 @@ public class Protector extends JFrame implements WindowListener
     {
         int quit = JOptionPane.showConfirmDialog(rootPane, "Czy na pewno chceszs wyjść?");
         if(quit == 0)
-            this.dispose();
+            System.exit(0);
     }
 
     @Override
