@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package protector;
 
 import java.awt.Toolkit;
@@ -29,12 +25,11 @@ import javax.swing.event.ChangeEvent;
 
 /**
  *
- * @author admin
+ * @author Jakub Nowak
  */
 public class ReferenceActivityCalculator extends IsotopesTable {
      float t;
     float activ;
-    float dist;
     float summ;
     float activityUnitMultiplayer;
     float timeUnitMultiplayer;
@@ -65,12 +60,10 @@ public class ReferenceActivityCalculator extends IsotopesTable {
     JLabel enterActivity = new JLabel("Enter current source activity");
     JLabel enterTime = new JLabel("Enter time");
     
-    String [] isotopesName = {"---", "Na-22", "Na-24", "K-42"}; 
-    String [] activity0UnitName = {"---", "Bq", "kBq", "MBq", "GBq"}; 
+    String [] isotopesName = {"---", "Na-22", "Na-24", "K-42"};
     String [] timeUnitName = {"---", "s", "min", "h", "days"}; 
     String [] activityUnitName = {"---", "Bq", "kBq", "MBq", "GBq"}; 
     JComboBox isotopes = new JComboBox(isotopesName);
-    JComboBox activity0Unit = new JComboBox(activity0UnitName);
     JComboBox timeUnit = new JComboBox(timeUnitName);
     JComboBox activityUnit = new JComboBox(activityUnitName);
        public ReferenceActivityCalculator()
@@ -268,18 +261,7 @@ public class ReferenceActivityCalculator extends IsotopesTable {
         });
     /*
     *               Getting unit multiplayer from UnitBox       
-    */        
-            activity0Unit.addActionListener((ActionEvent ae) -> {
-                if(((JComboBox)ae.getSource()).getSelectedIndex() == 1)
-                    activityUnitMultiplayer = (float) 1;
-                else if(((JComboBox)ae.getSource()).getSelectedIndex() == 2)
-                    activityUnitMultiplayer = (float) 1000;
-                else if(((JComboBox)ae.getSource()).getSelectedIndex() == 3)
-                    activityUnitMultiplayer = (float) 1000000;
-                else if(((JComboBox)ae.getSource()).getSelectedIndex() == 4)
-                    activityUnitMultiplayer = 1000000000;
-        });
-            
+    */                 
             timeUnit.addActionListener((ActionEvent ae) -> {
                 if(((JComboBox)ae.getSource()).getSelectedIndex() == 1)
                     timeUnitMultiplayer = (float) 1;

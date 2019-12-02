@@ -1,12 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package protector;
 
 import java.awt.Toolkit;
-import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.TableModel;
@@ -14,7 +9,7 @@ import javax.swing.event.*;
 
 /**
  *
- * @author admin
+ * @author Jakub Nowak
  */
 public class IsotopesTable extends Protector implements TableModelListener
 {
