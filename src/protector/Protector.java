@@ -1,5 +1,5 @@
 package protector;
-
+import java.awt.Frame;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
@@ -10,6 +10,10 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+/**
+ *
+ * @author Jakub Nowak
+ */
 public class Protector extends JFrame implements WindowListener
 {
     JPanel mainPanel = new JPanel();
@@ -67,13 +71,19 @@ public class Protector extends JFrame implements WindowListener
         exit.addActionListener((ActionEvent ae) -> {
             int quit = JOptionPane.showConfirmDialog(rootPane, "Czy na pewno chceszs wyjść?");
             if(quit == 0)
-                dispose();
+                System.exit(0);
         });
         isotopesTable.addActionListener((ActionEvent ae) -> {
             new IsotopesTable().setVisible(true);
         });
         dose.addActionListener((ActionEvent ae) -> {
             new DoseCalculating().setVisible(true);
+        });
+        activity.addActionListener((ActionEvent ae) -> {
+            new ActivityMenu().setVisible(true);
+        });
+        guarding.addActionListener((ActionEvent ae) -> {
+            JOptionPane.showMessageDialog(rootPane, "This feature is in progress");
         });
         
     }
@@ -94,7 +104,7 @@ public class Protector extends JFrame implements WindowListener
     {
         int quit = JOptionPane.showConfirmDialog(rootPane, "Czy na pewno chceszs wyjść?");
         if(quit == 0)
-            this.dispose();
+            System.exit(0);
     }
 
     @Override

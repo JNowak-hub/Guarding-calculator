@@ -1,4 +1,3 @@
-
 package protector;
 
 import java.awt.Toolkit;
@@ -27,11 +26,9 @@ import javax.swing.event.ChangeEvent;
  *
  * @author Jakub Nowak
  */
-public class DoseCalculating extends IsotopesTable
-{
+public class ReferenceActivityCalculator extends IsotopesTable {
     float t;
     float activ;
-    float dist;
     float summ;
     float activityUnitMultiplayer;
     float timeUnitMultiplayer;
@@ -47,35 +44,28 @@ public class DoseCalculating extends IsotopesTable
     
     JCheckBox unmark1 = new JCheckBox("Slider on/off");
     JCheckBox unmark2 = new JCheckBox("Slider on/off");
-    JCheckBox unmark3 = new JCheckBox("Slider on/off");
     
-    JTextField activity = new JTextField("Chose unit and enter Activity");
-    JTextField time = new JTextField("Chose unit and enter exposure time");
-    JTextField distance = new JTextField("Chose unit and enter distance from source");
+    JTextField time = new JTextField("Chose unit and enter time");
+    JTextField activity = new JTextField("Chose unit and enter current Activity (A)");
     
-    JSlider activitySlider = new JSlider();
     JSlider timeSlider = new JSlider();
-    JSlider distanceSlider = new JSlider();
+    JSlider activitySlider = new JSlider();
     
     
-    JTextArea distanceValue = new JTextArea(""+distanceSlider.getValue());
     JTextArea activityValue = new JTextArea(""+activitySlider.getValue());
     JTextArea timeValue = new JTextArea(""+timeSlider.getValue());
     JTextArea calculated = new JTextArea();
     
-    JLabel enterDistance = new JLabel("Enter distance form source");
-    JLabel enterActivity = new JLabel("Enter source activity");
-    JLabel enterTime = new JLabel("Enter expousure time");
+    JLabel enterActivity = new JLabel("Enter current source activity");
+    JLabel enterTime = new JLabel("Enter time");
     
-    String [] isotopesName = {"---", "Na-22", "Na-24", "K-42"}; 
-    String [] activityUnitName = {"---", "Bq", "kBq", "MBq", "GBq"}; 
+    String [] isotopesName = {"---", "Na-22", "Na-24", "K-42"};
     String [] timeUnitName = {"---", "s", "min", "h", "days"}; 
-    String [] distanceUnitName = {"---", "cm", "m"}; 
+    String [] activityUnitName = {"---", "Bq", "kBq", "MBq", "GBq"}; 
     JComboBox isotopes = new JComboBox(isotopesName);
-    JComboBox activityUnit = new JComboBox(activityUnitName);
     JComboBox timeUnit = new JComboBox(timeUnitName);
-    JComboBox distanceUnit = new JComboBox(distanceUnitName);
-       public DoseCalculating()
+    JComboBox activityUnit = new JComboBox(activityUnitName);
+       public ReferenceActivityCalculator()
     {
         initComponents();
     }
@@ -92,9 +82,8 @@ public class DoseCalculating extends IsotopesTable
         
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.getContentPane().add(mainGuardingPanel);
-        mainGuardingPanel.add(activity);
         mainGuardingPanel.add(time);
-        mainGuardingPanel.add(distance);
+        mainGuardingPanel.add(activity);
         GroupLayout layout = new GroupLayout(getContentPane());
         
         this.getContentPane().setLayout(layout);
@@ -107,24 +96,17 @@ public class DoseCalculating extends IsotopesTable
             layout.createSequentialGroup()
             .addGroup(
             layout.createParallelGroup()
-                    
-                    .addComponent(enterActivity)
-                    .addComponent(activityUnit, 50, 50 ,60)
-                    .addComponent(activity, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE ,Short.MAX_VALUE)
-                    .addComponent(activitySlider)
-                    .addComponent(activityValue)
-                    .addComponent(unmark3)
                     .addComponent(enterTime)
                     .addComponent(timeUnit, 50, 50 ,60)
                     .addComponent(time, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE ,Short.MAX_VALUE)
                     .addComponent(timeSlider)
                     .addComponent(timeValue)
                     .addComponent(unmark1)
-                    .addComponent(enterDistance)
-                    .addComponent(distanceUnit, 50, 50 ,60)
-                    .addComponent(distance, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE ,Short.MAX_VALUE)
-                    .addComponent(distanceSlider)
-                    .addComponent(distanceValue)
+                    .addComponent(enterActivity)
+                    .addComponent(activityUnit, 50, 50 ,60)
+                    .addComponent(activity, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE ,Short.MAX_VALUE)
+                    .addComponent(activitySlider)
+                    .addComponent(activityValue)
                     .addComponent(unmark2)
                     .addComponent(calculate)
                     .addComponent(calculated)
@@ -145,18 +127,12 @@ public class DoseCalculating extends IsotopesTable
                     .addComponent(timeSlider)
                     .addComponent(timeValue)
                     .addComponent(unmark1)
-                    .addComponent(enterDistance)
-                    .addComponent(distanceUnit)
-                    .addComponent(distance)
-                    .addComponent(distanceSlider)
-                    .addComponent(distanceValue)
-                    .addComponent(unmark2)
                     .addComponent(enterActivity)
                     .addComponent(activityUnit)
                     .addComponent(activity)
                     .addComponent(activitySlider)
                     .addComponent(activityValue)
-                    .addComponent(unmark3)
+                    .addComponent(unmark2)
                     .addComponent(calculate)
                     .addComponent(calculated)
             .addGroup(
@@ -223,49 +199,8 @@ public class DoseCalculating extends IsotopesTable
                 }
             }            
         });
+    
     activity.addKeyListener(new KeyAdapter() 
-        {
-            private boolean number(char zn)
-        {
-           if (zn >= '0' && zn <= '9' || zn == '.')
-            return true;
-                
-            return false;     
-        }
-            @Override
-            public void keyTyped(KeyEvent ke)
-        {
-            if(!number(ke.getKeyChar()))
-                ke.consume();  
-         }
-            @Override
-            public void keyPressed(KeyEvent ke)
-            {
-                Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-                DataFlavor flavor = DataFlavor.stringFlavor;
-                String clip = "";
-                
-                try {
-                    clip = (String)clipboard.getData(flavor);
-                } catch (UnsupportedFlavorException ex) 
-                {
-                    JOptionPane.showMessageDialog(rootPane, "It's not a number");
-                } catch (IOException ex) 
-                {
-                    JOptionPane.showMessageDialog(rootPane, "Error occured");
-                }
-                
-                for(int i = 0; i < clip.length(); i++)
-                {
-                    if(!number(clip.charAt(i)))
-                    {
-                        ke.consume();
-                        break;
-                    }
-                }
-            }
-        });
-    distance.addKeyListener(new KeyAdapter() 
         {
             private boolean number(char zn)
         {
@@ -325,34 +260,27 @@ public class DoseCalculating extends IsotopesTable
         });
     /*
     *               Getting unit multiplayer from UnitBox       
-    */        
-            activityUnit.addActionListener((ActionEvent ae) -> {
-                if(((JComboBox)ae.getSource()).getSelectedIndex() == 1)
-                    activityUnitMultiplayer = (float) 0.000000001;
-                else if(((JComboBox)ae.getSource()).getSelectedIndex() == 2)
-                    activityUnitMultiplayer = (float) 0.000001;
-                else if(((JComboBox)ae.getSource()).getSelectedIndex() == 3)
-                    activityUnitMultiplayer = (float) 0.001;
-                else if(((JComboBox)ae.getSource()).getSelectedIndex() == 4)
-                    activityUnitMultiplayer = 1;
-        });
-            
+    */                 
             timeUnit.addActionListener((ActionEvent ae) -> {
                 if(((JComboBox)ae.getSource()).getSelectedIndex() == 1)
-                    timeUnitMultiplayer = (float) 0.0002777778;
+                    timeUnitMultiplayer = (float) 1;
                 else if(((JComboBox)ae.getSource()).getSelectedIndex() == 2)
-                    timeUnitMultiplayer = (float) 0.0166666667;
+                    timeUnitMultiplayer = (float) 60;
                 else if(((JComboBox)ae.getSource()).getSelectedIndex() == 3)
-                    timeUnitMultiplayer = 1;
+                    timeUnitMultiplayer = 3600;
                 else if(((JComboBox)ae.getSource()).getSelectedIndex() == 4)
-                    timeUnitMultiplayer = 24;
+                    timeUnitMultiplayer = 86400;
         });
             
-            distanceUnit.addActionListener((ActionEvent ae) -> {
+            activityUnit.addActionListener((ActionEvent ae) -> {
                 if(((JComboBox)ae.getSource()).getSelectedIndex() == 1)
-                    distanceUnitMultiplayer = (float) 0.01;
+                    activityUnitMultiplayer = (float) 1;
                 else if(((JComboBox)ae.getSource()).getSelectedIndex() == 2)
-                    distanceUnitMultiplayer = 1;
+                    activityUnitMultiplayer = (float) 1000;
+                else if(((JComboBox)ae.getSource()).getSelectedIndex() == 3)
+                    activityUnitMultiplayer = (float) 1000000;
+                else if(((JComboBox)ae.getSource()).getSelectedIndex() == 4)
+                    activityUnitMultiplayer = 1000000000;
         });
             
     
@@ -369,63 +297,28 @@ public class DoseCalculating extends IsotopesTable
                     try
                     {
 
-                        if(unmark1.isSelected() && unmark2.isSelected() && unmark3.isSelected())
+                        if(unmark1.isSelected() && unmark2.isSelected())
                         {
                             t = Float.parseFloat(timeValue.getText());
-                            dist = Float.parseFloat(distanceValue.getText());
                             activ = Float.parseFloat(activityValue.getText());
                         }
-                        else if(!unmark1.isSelected() && unmark2.isSelected() && unmark3.isSelected())
+                        else if(!unmark1.isSelected() && unmark2.isSelected())
                         {
                             t = Float.parseFloat(time.getText());
-                            dist = Float.parseFloat(distanceValue.getText());
                             activ = Float.parseFloat(activityValue.getText());     
                         }
-                        else if(unmark1.isSelected() && !unmark2.isSelected() && unmark3.isSelected())
+                        else if(unmark1.isSelected() && !unmark2.isSelected())
                         {
                             t = Float.parseFloat(timeValue.getText());
-                            dist = Float.parseFloat(distance.getText());
-                            activ = Float.parseFloat(activityValue.getText());
-                        }                    
-                        else if(unmark1.isSelected() && unmark2.isSelected() && !unmark3.isSelected())
-                        {
-                            t = Float.parseFloat(timeValue.getText());
-                            dist = Float.parseFloat(distanceValue.getText());
-                            activ = Float.parseFloat(activity.getText());
-                        }                     
-                        else if(!unmark1.isSelected() && !unmark2.isSelected() && unmark3.isSelected())
-                        {
-                            t = Float.parseFloat(time.getText());
-                            dist = Float.parseFloat(distance.getText());
-                            activ = Float.parseFloat(activityValue.getText());
-                        }                     
-                        else if(!unmark1.isSelected() && unmark2.isSelected() && !unmark3.isSelected())
-                        {
-                            t = Float.parseFloat(time.getText());
-                            dist = Float.parseFloat(distanceValue.getText());
-                            activ = Float.parseFloat(activity.getText());
-                        }                     
-                        else if(unmark1.isSelected() && !unmark2.isSelected() && !unmark3.isSelected())
-                        {
-                            t = Float.parseFloat(timeValue.getText());
-                            dist = Float.parseFloat(distance.getText());
-                            activ = Float.parseFloat(activity.getText());
-                        }                     
-                        else if(unmark1.isSelected() && !unmark2.isSelected() && unmark3.isSelected())
-                        {
-                            t = Float.parseFloat(timeValue.getText());
-                            dist = Float.parseFloat(distance.getText());
-                            activ = Float.parseFloat(activityValue.getText());
-                        }                     
-                        else if(!unmark1.isSelected() && !unmark2.isSelected() && !unmark3.isSelected())
-                        {
-                            t = Float.parseFloat(time.getText());
-                            dist = Float.parseFloat(distance.getText());
                             activ = Float.parseFloat(activity.getText());
                         }
-                        
-                        summ = (float) ((exposureRateConstant*activ*activityUnitMultiplayer*t*timeUnitMultiplayer)/(Math.pow((Double.parseDouble(String.valueOf(dist))*distanceUnitMultiplayer), 2)));
-                        calculated.setText("Wynik: "+ Float.toString(summ) + "[cGy]");    
+                        else if(!unmark1.isSelected() && !unmark2.isSelected())
+                        {
+                            t = Float.parseFloat(time.getText());
+                            activ = Float.parseFloat(activity.getText());
+                        }
+                        summ = (float) ((exposureRateConstant*activ*activityUnitMultiplayer*t*timeUnitMultiplayer));
+                        calculated.setText("Wynik: "+ Float.toString(summ) + " " + activityUnit.getSelectedItem().toString());    
                     }
                     catch(NumberFormatException e)
                     {
@@ -456,46 +349,29 @@ public class DoseCalculating extends IsotopesTable
         unmark2.addActionListener((ActionEvent ae) -> {
             if(unmark2.isSelected())
             {
-                distance.setEnabled(false);
-                distanceSlider.setEnabled(true);
-            }
-            else if (!unmark2.isSelected())
-            {
-                distance.setEnabled(true);
-                distanceSlider.setEnabled(false);
-            }
-    });
-        unmark3.addActionListener((ActionEvent ae) -> {
-            if(unmark3.isSelected())
-            {
                 activity.setEnabled(false);
                 activitySlider.setEnabled(true);
             }
-            else if (!unmark3.isSelected())
+            else if (!unmark2.isSelected())
             {
                 activity.setEnabled(true);
                 activitySlider.setEnabled(false);
             }
     });
-        distanceSlider.setMajorTickSpacing(10);
-        distanceSlider.setMinorTickSpacing(2);
-        distanceSlider.setPaintTicks(true);
-        distanceSlider.setEnabled(false);
-        timeSlider.setMajorTickSpacing(10);
-        timeSlider.setMinorTickSpacing(2);
-        timeSlider.setPaintTicks(true);
-        timeSlider.setEnabled(false);
+
         activitySlider.setMajorTickSpacing(10);
         activitySlider.setMinorTickSpacing(2);
         activitySlider.setPaintTicks(true);
         activitySlider.setEnabled(false);
+        timeSlider.setMajorTickSpacing(10);
+        timeSlider.setMinorTickSpacing(2);
+        timeSlider.setPaintTicks(true);
+        timeSlider.setEnabled(false);
         
-        distanceSlider.addChangeListener((ChangeEvent ce) -> {
-            distanceValue.setText(""+((JSlider)ce.getSource()).getValue());
-        });
         activitySlider.addChangeListener((ChangeEvent ce) -> {
             activityValue.setText(""+((JSlider)ce.getSource()).getValue());
         });
+        
         timeSlider.addChangeListener((ChangeEvent ce) -> {
             timeValue.setText(""+((JSlider)ce.getSource()).getValue());
         });
