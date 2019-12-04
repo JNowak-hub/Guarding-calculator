@@ -1,4 +1,3 @@
-
 package protector;
 
 import java.awt.Toolkit;
@@ -28,7 +27,7 @@ import javax.swing.event.ChangeEvent;
  * @author Jakub Nowak
  */
 public class ReferenceActivityCalculator extends IsotopesTable {
-     float t;
+    float t;
     float activ;
     float summ;
     float activityUnitMultiplayer;
