@@ -88,7 +88,7 @@ public class DoseCalculating extends IsotopesTable
         
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.setBounds((width-currentWidth)/4, (height-currentHeight), width/3+10, height+150);
-        this.setTitle("Calculating radiation guarding made by: J.N.");
+        this.setTitle("Calculating absobed dose");
         
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.getContentPane().add(mainGuardingPanel);

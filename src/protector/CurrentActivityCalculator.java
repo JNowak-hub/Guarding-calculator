@@ -29,7 +29,7 @@ import javax.swing.event.ChangeEvent;
  *
  * @author Jakub Nowak
  */
-public class ReferenceActivityCalculator extends IsotopesTable {
+public class CurrentActivityCalculator extends IsotopesTable {
     float t;
     float activ;
     float summ;
@@ -68,7 +68,7 @@ public class ReferenceActivityCalculator extends IsotopesTable {
     JLabel refTime = new JLabel("Enter reference time :");
     JLabel currTime = new JLabel("Enter current time :");
     JLabel timeDiff = new JLabel("Diffrence in time :");
-    JLabel activEnter = new JLabel("Enter current activity value :");
+    JLabel activEnter = new JLabel("Enter reference activity value :");
     
     JTextField timeValue = new JTextField("0 [s]");
     JTextField activity = new JTextField("Chose unit and enter current Activity (A)");
@@ -80,7 +80,7 @@ public class ReferenceActivityCalculator extends IsotopesTable {
     String [] activityUnitName = {"---", "Bq", "kBq", "MBq", "GBq"}; 
     JComboBox isotopes = new JComboBox(isotopesName);
     JComboBox activityUnit = new JComboBox(activityUnitName);
-       public ReferenceActivityCalculator()
+       public CurrentActivityCalculator()
     {
         initComponents();
     }
@@ -93,7 +93,7 @@ public class ReferenceActivityCalculator extends IsotopesTable {
         
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.setBounds((width-currentWidth)/4, (height-currentHeight), width/3+10, height+150);
-        this.setTitle("Calculating reference activity");
+        this.setTitle("Calculating current activity");
         
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.getContentPane().add(mainGuardingPanel);
@@ -269,14 +269,13 @@ public class ReferenceActivityCalculator extends IsotopesTable {
                             activ = Float.parseFloat(activity.getText());     
                         }
 
-                        
-                        if(diffDate < 0)
+                      if(diffDate < 0)
                         {
                             JOptionPane.showMessageDialog(mainGuardingPanel, "Check if date is entered corretly");
                         }
                         else
-                        {
-                            summ = (float) ((float) activ/(Math.exp(-diffDate*(Math.log(2)/halfLife))));
+                        {  
+                            summ = (float) ((float) activ*(Math.exp(-diffDate*(Math.log(2)/halfLife))));
                             calculated.setText("Wynik: "+ Float.toString(summ) + " " + activityUnit.getSelectedItem().toString());
                         }
                     }

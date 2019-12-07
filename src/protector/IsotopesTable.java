@@ -6,9 +6,7 @@
 package protector;
 
 import java.awt.Toolkit;
-import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.TableModel;
@@ -27,9 +25,9 @@ public class IsotopesTable extends JFrame implements TableModelListener
     JTable gamma;
     String[] colums = {"Isotope","half-life","Energy used for calculations","Exposure rate constant"};
     String[][] arrays ={
-        {"Na-22","949","1.3","0.0296"},
-        {"Na-24","0.6125","2.8","0.0449"},
-        {"K-42","0.517","1.5","0.0045"}
+        {"Na-22","81993600","1.3","0.0296"},
+        {"Na-24","52920","2.8","0.0449"},
+        {"K-42","44640","1.5","0.0045"}
     };
         JTable gammaView;
     String[] columsView = {"Isotope","half-life","Energy used for calculations MeV","Exposure rate constant cGyh^-1GBq^-1m^2"};
