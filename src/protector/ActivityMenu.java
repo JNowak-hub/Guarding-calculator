@@ -76,7 +76,7 @@ public class ActivityMenu extends JFrame{
         new ReferenceActivityCalculator().setVisible(true);
         });
     currentActivity.addActionListener((ActionEvent ae) -> {
-        JOptionPane.showMessageDialog(rootPane, "This feature is in progress");
+        new CurrentActivityCalculator().setVisible(true);
         });
     indentyfyIsotop.addActionListener((ActionEvent ae) -> {
         JOptionPane.showMessageDialog(rootPane, "This feature is in progress");
