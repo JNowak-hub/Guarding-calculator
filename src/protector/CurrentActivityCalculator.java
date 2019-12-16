@@ -207,7 +207,7 @@ public class CurrentActivityCalculator extends IsotopesTable {
                 
                 for(int i = 0; i < clip.length(); i++)
                 {
-                    if(!number(clip.charAt(i)))
+                    if(!number(clip.charAt(i)) && ke.getKeyCode() != KeyEvent.VK_BACK_SPACE)
                     {
                         ke.consume();
                         break;
@@ -215,6 +215,51 @@ public class CurrentActivityCalculator extends IsotopesTable {
                 }
             }            
         });
+    timeValue.addKeyListener(new KeyAdapter() 
+    {
+        private boolean number(char zn)
+    {
+       if (zn >='0' && zn <= '9' || zn == '.')
+    	   return true;
+       else     
+    	   return false;     
+    }
+        @Override
+        public void keyTyped(KeyEvent ke)
+    {
+        if(!number(ke.getKeyChar()))
+            ke.consume();
+            
+     }
+        
+        @Override
+        public void keyPressed(KeyEvent ke)
+        {
+            Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+            DataFlavor flavor = DataFlavor.stringFlavor;
+            String clip = "";
+            
+            try {
+                clip = (String)clipboard.getData(flavor);
+            } catch (UnsupportedFlavorException ex) 
+            {
+                JOptionPane.showMessageDialog(rootPane, "It's not a number");
+            } catch (IOException ex) 
+            {
+                JOptionPane.showMessageDialog(rootPane, "Error occured");
+            }
+            
+            for(int i = 0; i < clip.length(); i++)
+            {
+                if(!number(clip.charAt(i)) && ke.getKeyCode() != KeyEvent.VK_BACK_SPACE)
+                {
+                    ke.consume();
+                    break;
+                }
+            }
+        }
+                   
+    });
     
     /*
     *               Geting valuses form isotopesTable using JTabbePane

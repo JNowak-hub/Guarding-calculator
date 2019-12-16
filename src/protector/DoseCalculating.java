@@ -214,7 +214,7 @@ public class DoseCalculating extends IsotopesTable
                 
                 for(int i = 0; i < clip.length(); i++)
                 {
-                    if(!number(clip.charAt(i)))
+                    if(!number(clip.charAt(i)) && ke.getKeyCode() != KeyEvent.VK_BACK_SPACE)
                     {
                         ke.consume();
                         break;
@@ -257,7 +257,7 @@ public class DoseCalculating extends IsotopesTable
                 
                 for(int i = 0; i < clip.length(); i++)
                 {
-                    if(!number(clip.charAt(i)))
+                    if(!number(clip.charAt(i)) && ke.getKeyCode() != KeyEvent.VK_BACK_SPACE)
                     {
                         ke.consume();
                         break;
@@ -300,7 +300,7 @@ public class DoseCalculating extends IsotopesTable
                 
                 for(int i = 0; i < clip.length(); i++)
                 {
-                    if(!number(clip.charAt(i)))
+                    if(!number(clip.charAt(i)) && ke.getKeyCode() != KeyEvent.VK_BACK_SPACE)
                     {
                         ke.consume();
                         break;
