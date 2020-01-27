@@ -82,7 +82,7 @@ public class Protector extends JFrame implements WindowListener
             new ActivityMenu().setVisible(true);
         });
         guarding.addActionListener((ActionEvent ae) -> {
-            JOptionPane.showMessageDialog(rootPane, "This feature is in progress");
+            new Guarding().setVisible(true);
         });
         
     }
