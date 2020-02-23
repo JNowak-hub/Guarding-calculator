@@ -84,10 +84,10 @@ public class DoseCalculating extends IsotopesTable
         int width = Toolkit.getDefaultToolkit().getScreenSize().width-500;
         int height = Toolkit.getDefaultToolkit().getScreenSize().height/2;
         int currentWidth = this.getSize().width;
-        int currentHeight = this.getSize().height;
+        int currentHeight = this.getSize().height*2;
         
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        this.setBounds((width-currentWidth)/4, (height-currentHeight), width/3+10, height+150);
+        this.setBounds((width-currentWidth)/2, (height-currentHeight)/height, width, height*2);
         this.setTitle("Calculating absobed dose");
         
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

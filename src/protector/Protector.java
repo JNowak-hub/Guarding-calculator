@@ -29,7 +29,7 @@ public class Protector extends JFrame implements WindowListener
     
     private void initComponets()
     {
-        int width = Toolkit.getDefaultToolkit().getScreenSize().width-500;
+        int width = Toolkit.getDefaultToolkit().getScreenSize().width;
         int height = Toolkit.getDefaultToolkit().getScreenSize().height/2;
         int currentWidth = this.getSize().width;
         int currentHeight = this.getSize().height;
