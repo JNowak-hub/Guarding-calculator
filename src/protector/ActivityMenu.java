@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 /**
  *
  * @author Jakub Nowak
+ * Leszek checked
  */
 public class ActivityMenu extends JFrame{
     JPanel mainGuardingPanel = new JPanel();
